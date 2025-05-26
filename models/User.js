@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, unique: true },
   photo: String,
   bio: String,
+  phone: String,
+  address: String,
   role: { type: String, enum: ['tourist', 'tour_guide', 'admin'], default: 'tourist' }
 });
 

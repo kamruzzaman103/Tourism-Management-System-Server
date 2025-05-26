@@ -50,6 +50,7 @@ const bookingRoutes = require("./routes/booking");
 const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const storyRoutes = require('./routes/storyRoutes');
+const tourGuideRoutes = require('./routes/tourGuideRoutes');
 
 dotenv.config();
 const app = express();
@@ -74,6 +75,8 @@ app.use('/api/users', userRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/stories', storyRoutes);
 app.use('/uploads/stories', express.static('uploads/stories'));
+app.use('/api/tour-guide-applications', tourGuideRoutes);
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 
 // ✅ POST /users

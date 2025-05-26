@@ -33,6 +33,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { getUserByEmail, updateUserByEmail } = require('../controllers/userController');
 
 
 
@@ -94,6 +95,11 @@ router.put('/:email', async (req, res) => {
     res.status(500).send({ error: 'Update failed' });
   }
 });
+
+router.get('/profile/:email', getUserByEmail);
+
+// Update user (except email & role)
+router.put('/profile/:email', updateUserByEmail);
 
 
 module.exports = router;

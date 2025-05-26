@@ -85,6 +85,26 @@ router.patch("/remove-image/:id", verifyJWT, async (req, res) => {
 });
 
 
+// const multer = require('multer');
+// const upload = multer({ dest: 'uploads/stories' });
+
+router.patch('/update/:id', verifyJWT, upload.array('images'), async (req, res) => {
+  const { title, description } = req.body;
+  const newImages = req.files.map(file => file.filename);
+
+  const result = await Story.updateOne(
+    { _id: req.params.id, userId: req.user.id },
+    {
+      $set: { title, description },
+      $push: { images: { $each: newImages } }
+    }
+  );
+  res.send(result);
+});
+
+
+
+
 
 
 module.exports = router;
