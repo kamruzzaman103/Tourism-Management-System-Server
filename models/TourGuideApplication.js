@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const TourGuideApplicationSchema = new mongoose.Schema({
-  userId: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true, //  ensure it's required
+  },
   name: String,
   email: String,
   photo: String,

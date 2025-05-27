@@ -1,15 +1,3 @@
-// const mongoose = require("mongoose");
-
-// const storySchema = new mongoose.Schema({
-//   title: String,
-//   content: String,
-//   user: String,
-//   photo: String,
-// });
-
-// module.exports = mongoose.model("Story", storySchema);
-
-
 const mongoose = require('mongoose');
 
 const storySchema = new mongoose.Schema({

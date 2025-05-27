@@ -1,42 +1,3 @@
-// const express = require('express');
-// const cors = require('cors');
-// const dotenv = require('dotenv');
-// const connectDB = require('./config/db');
-// const jwtRoute = require('./routes/jwt');
-
-// dotenv.config();
-// const app = express();
-
-// connectDB();
-
-// app.use(cors());
-// app.use(express.json());
-// app.use('/jwt', jwtRoute);
-
-
-// app.post("/users", async (req, res) => {
-//     const { name, email, photo, role } = req.body;
-//     const existing = await usersCollection.findOne({ email });
-//     if (existing) return res.send({ message: "user already exists" });
-//     const result = await usersCollection.insertOne({ name, email, photo, role });
-//     res.send(result);
-//   });
-
-//   app.get("/users/role/:email", async (req, res) => {
-//     const email = req.params.email;
-//     const user = await usersCollection.findOne({ email });
-//     res.send({ role: user?.role || "tourist" });
-//   });
-
-// app.get('/', (req, res) => {
-//   res.send('Tourism Management System API is running');
-// });
-
-// const PORT = process.env.PORT || 5000;
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${PORT}`);
-// });
-
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -51,6 +12,9 @@ const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const storyRoutes = require('./routes/storyRoutes');
 const tourGuideRoutes = require('./routes/tourGuideRoutes');
+const packageRoutes = require('./routes/packageRoutes');
+const candidateRoutes = require('./routes/candidateRoutes');
+
 
 dotenv.config();
 const app = express();
@@ -77,6 +41,10 @@ app.use('/api/stories', storyRoutes);
 app.use('/uploads/stories', express.static('uploads/stories'));
 app.use('/api/tour-guide-applications', tourGuideRoutes);
 app.use('/api/admin', require('./routes/adminRoutes'));
+app.use('/api/packages', packageRoutes);
+app.use('/api/candidates', candidateRoutes);
+
+
 
 
 // ✅ POST /users
@@ -95,23 +63,32 @@ app.get("/users/role/:email", async (req, res) => {
   res.send({ role: user?.role || "tourist" });
 });
 
-// // backend/routes/packageRoutes.js
-// app.get("/packages/random", async (req, res) => {
-//   const randomPackages = await packagesCollection.aggregate([{ $sample: { size: 3 } }]).toArray();
-//   res.send(randomPackages);
-// });
+// Route to get all users
+app.get('/users', async (req, res) => {
+  const { search, role } = req.query;
+  const query = {};
 
-// // backend/routes/guideRoutes.js
-// app.get("/guides/random", async (req, res) => {
-//   const randomGuides = await guidesCollection.aggregate([{ $sample: { size: 6 } }]).toArray();
-//   res.send(randomGuides);
-// });
+  if (search) {
+    query.$or = [
+      { name: new RegExp(search, 'i') },
+      { email: new RegExp(search, 'i') },
+    ];
+  }
 
-// // backend/routes/storyRoutes.js
-// app.get("/stories/random", async (req, res) => {
-//   const randomStories = await storiesCollection.aggregate([{ $sample: { size: 4 } }]).toArray();
-//   res.send(randomStories);
-// });
+  if (role) {
+    query.role = role;
+  }
+
+  try {
+    const users = await User.find(query);
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 
 app.get("/packages/random", async (req, res) => {
   const randomPackages = await Package.aggregate([{ $sample: { size: 3 } }]);

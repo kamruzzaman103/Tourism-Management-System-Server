@@ -96,6 +96,13 @@ router.put('/:email', async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  const guides = await User.find({ role: "tour-guide" });
+  res.json(guides);
+});
+
+
+
 router.get('/profile/:email', getUserByEmail);
 
 // Update user (except email & role)
