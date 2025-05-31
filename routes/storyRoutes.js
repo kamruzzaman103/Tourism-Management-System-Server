@@ -85,8 +85,6 @@ router.patch("/remove-image/:id", verifyJWT, async (req, res) => {
 });
 
 
-// const multer = require('multer');
-// const upload = multer({ dest: 'uploads/stories' });
 
 router.patch('/update/:id', verifyJWT, upload.array('images'), async (req, res) => {
   const { title, description } = req.body;
