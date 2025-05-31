@@ -3,7 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const jwtRoute = require('./routes/jwt');
-const User = require('./models/User'); // ✅ Mongoose Model Import
+const User = require('./models/User'); 
 const Package = require("./models/Package");
 const Guide = require("./models/TourGuide");
 const Story = require("./models/Story");
@@ -21,15 +21,6 @@ dotenv.config();
 const app = express();
 
 connectDB();
-
-
-
-
-
-
-
-
-
 
 
 app.use(cors());
@@ -125,20 +116,6 @@ app.get('/packages', async (req, res) => {
   const packages = await Package.find();
   res.send(packages);
 });
-
-// Get single tour guide
-// app.get('/tour-guides/:id', async (req, res) => {
-//   const guide = await TourGuide.findById(req.params.id);
-//   res.send(guide);
-// });
-
-// Add a booking (example - you'll need this for Book Now later)
-// app.post('/bookings', async (req, res) => {
-//   // You can create a Booking model similarly and save it
-//   // Status: pending
-//   res.send({ success: true, message: "Booking created with status: pending" });
-// });
-
 
 
 
