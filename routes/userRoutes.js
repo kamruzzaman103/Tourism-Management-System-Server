@@ -1,33 +1,3 @@
-// const express = require('express');
-// const router = express.Router();
-// const User = require('../models/User');
-
-// // Get user profile
-// router.get('/:email', async (req, res) => {
-//   try {
-//     const user = await User.findOne({ email: req.params.email });
-//     res.send(user);
-//   } catch (err) {
-//     res.status(500).send({ error: 'Failed to fetch user' });
-//   }
-// });
-
-// // Update user profile (excluding role and email)
-// router.put('/:email', async (req, res) => {
-//   const { name, photoURL, phone, address } = req.body;
-//   try {
-//     const updated = await User.findOneAndUpdate(
-//       { email: req.params.email },
-//       { name, photoURL, phone, address },
-//       { new: true }
-//     );
-//     res.send(updated);
-//   } catch (err) {
-//     res.status(500).send({ error: 'Update failed' });
-//   }
-// });
-
-// module.exports = router;
 
 
 const express = require('express');
@@ -64,20 +34,6 @@ router.get('/:email', async (req, res) => {
   }
 });
 
-// // Update user profile (excluding role and email)
-// router.put('/:email', async (req, res) => {
-//   const { name, photo, phone, address } = req.body;
-//   try {
-//     const updated = await User.findOneAndUpdate(
-//       { email: req.params.email },
-//       { name, photo, phone, address },
-//       { new: true }
-//     );
-//     res.send(updated);
-//   } catch (err) {
-//     res.status(500).send({ error: 'Update failed' });
-//   }
-// });
 
 
 // Update user profile (excluding role and email)

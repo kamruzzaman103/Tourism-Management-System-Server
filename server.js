@@ -14,6 +14,7 @@ const storyRoutes = require('./routes/storyRoutes');
 const tourGuideRoutes = require('./routes/tourGuideRoutes');
 const packageRoutes = require('./routes/packageRoutes');
 const candidateRoutes = require('./routes/candidateRoutes');
+const assignedToursRoute = require("./routes/assignedTours");
 
 
 dotenv.config();
@@ -34,7 +35,7 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 app.use('/jwt', jwtRoute);
-app.use("/bookings", bookingRoutes);
+app.use("/api/bookings", bookingRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/stories', storyRoutes);
@@ -43,6 +44,7 @@ app.use('/api/tour-guide-applications', tourGuideRoutes);
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/packages', packageRoutes);
 app.use('/api/candidates', candidateRoutes);
+app.use("/api/assigned-tours", assignedToursRoute);
 
 
 
@@ -125,17 +127,17 @@ app.get('/packages', async (req, res) => {
 });
 
 // Get single tour guide
-app.get('/tour-guides/:id', async (req, res) => {
-  const guide = await TourGuide.findById(req.params.id);
-  res.send(guide);
-});
+// app.get('/tour-guides/:id', async (req, res) => {
+//   const guide = await TourGuide.findById(req.params.id);
+//   res.send(guide);
+// });
 
 // Add a booking (example - you'll need this for Book Now later)
-app.post('/bookings', async (req, res) => {
-  // You can create a Booking model similarly and save it
-  // Status: pending
-  res.send({ success: true, message: "Booking created with status: pending" });
-});
+// app.post('/bookings', async (req, res) => {
+//   // You can create a Booking model similarly and save it
+//   // Status: pending
+//   res.send({ success: true, message: "Booking created with status: pending" });
+// });
 
 
 

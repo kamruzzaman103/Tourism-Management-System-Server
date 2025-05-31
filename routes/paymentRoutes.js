@@ -13,6 +13,9 @@ router.post('/create-payment-intent', async (req, res) => {
     payment_method_types: ['card']
   });
 
+  
+  
+
   res.send({
     clientSecret: paymentIntent.client_secret,
   });

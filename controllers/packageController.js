@@ -9,9 +9,12 @@ exports.addPackage = async (req, res) => {
       galleryImages,
       about,
       tourPlan,
-      tourGuides
+      tourGuides,
+      tourGuideEmail
     } = req.body;
 
+
+   
     const newPackage = new Package({
       packageName,
       price,
@@ -20,6 +23,7 @@ exports.addPackage = async (req, res) => {
       about,
       tourPlan,
       tourGuides,
+      tourGuideEmail,
       createdBy: req.user._id, // assuming you’re using middleware to add user
     
     });
@@ -35,17 +39,17 @@ exports.getPackage = async (req, res) => {
   try {
     const { id } = req.params;
 
-    // প্যাকেজ খোঁজা
+    
     const packageData = await Package.findById(id);
 
     if (!packageData) {
       return res.status(404).json({ message: 'Package not found' });
     }
 
-    // গাইডদের তথ্য আলাদা করে বের করা (যদি tourGuides অ্যারেতে user ID থাকে)
+   
     const guides = await User.find({
       _id: { $in: packageData.tourGuides }
-    }).select('-password'); // পাসওয়ার্ড বাদ দিয়ে
+    }).select('-password'); 
 
     res.status(200).json({
       package: packageData,
@@ -60,10 +64,10 @@ exports.getPackage = async (req, res) => {
 
 
 
-// GET /api/packages → সব প্যাকেজ রিটার্ন করবে
+
 exports.getAllPackages = async (req, res) => {
   try {
-    const packages = await Package.find(); // সব প্যাকেজ খুঁজবে
+    const packages = await Package.find(); 
     res.status(200).json(packages); // success response
   } catch (error) {
     console.error("Error fetching packages:", error);
