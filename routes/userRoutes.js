@@ -1,13 +1,7 @@
-
-
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const { getUserByEmail, updateUserByEmail } = require('../controllers/userController');
-
-
-
-
 
 
 router.post("/", async (req, res) => {
